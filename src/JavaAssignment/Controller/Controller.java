@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 
 public class Controller {
 
+
     /**
      * Object used to make possible operations in matrix input text field.
      * It binds Graphical JavaFX TextArea with that object.
@@ -24,17 +25,20 @@ public class Controller {
      */
     @FXML
     protected TextArea resultsArea;
+
     /**
-     * Object used to display results in results TextArea.
+     * Object used to display current program status in information area.
      * It binds Graphical JavaFX TextArea with that object.
      */
     @FXML
     protected TextArea infoArea;
 
+    private String initialInfo;
+
     public Controller() {
-
-
+        initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
     }
+
 
     public void pressButon(ActionEvent event) {
         System.out.println("Java assignment");
@@ -59,13 +63,13 @@ public class Controller {
 
 
     public void clearButton(ActionEvent event) {
-        System.out.println("112");
-
 
         matrixArea.clear();
         vectorArea.clear();
         resultsArea.clear();
+        infoArea.setText(initialInfo);
     }
 
 
 }
+
