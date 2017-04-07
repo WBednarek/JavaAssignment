@@ -52,7 +52,7 @@ public class Controller {
 
     public boolean inputIsOnlyOneNumber() {
 
-        if (matrixArea.getLength() == 0) {
+        if (matrixArea.getLength() == 1) {
             System.out.println("Input is only one number");
             infoArea.setText("Your input is just one number");
         } else {
@@ -64,6 +64,7 @@ public class Controller {
 
 
     public void getMatrix() {
+        inputIsOnlyOneNumber();
         String textMatrix = matrixArea.getText();
         String[] rows = textMatrix.trim().split("\n");
         int vectorLength = this.readSingleVector(rows).size();
@@ -73,7 +74,7 @@ public class Controller {
             for (int i = 0; i < vectorLength; ++i) {
                 String[] row = rows[i].trim().split("\\s+");
                 for (int j = 0; j < vectorLength; ++j) {
-                    inputMatrix.setMatrixRow(i, j, Double.valueOf(row[j]));
+                    inputMatrix.setMatrixElement(i, j, Double.valueOf(row[j]));
                 }
             }
             inputMatrix.display();

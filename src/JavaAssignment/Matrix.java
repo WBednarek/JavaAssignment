@@ -5,6 +5,8 @@ package JavaAssignment;
  */
 
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
 
 /**
@@ -52,11 +54,100 @@ public class Matrix {
 
     }
 
-    public void setMatrixRow(int rowElement, int columnElement, Double matrixValue) {
+
+    /**
+     * Copy Constructor
+     *
+     * @param mat Matrix to copy
+     */
+    public Matrix(Matrix mat) {
+
+        matrix = new ArrayList<ArrayList<Double>>();
+        /**
+         * Ensuring minimum capacity for number of rows in matrix
+         */
+        matrix.ensureCapacity(mat.getNumOfRows());
+
+        /**
+         * Ensuring minimum capacity for number of columns in matrix
+         */
+        for (int i = 0; i < mat.getNumOfRows(); ++i) {
+            matrix.ensureCapacity(mat.getNumOfColumns());
+        }
+
+        /**
+         * Copying elements to matrix
+         */
+        for (int i = 0; i < mat.getNumOfRows(); ++i) {
+            matrix.add(i, mat.getRow(i));
+            for (int j = 0; j < mat.getNumOfColumns(); ++j) {
+                matrix.get(i).set(j, mat.getMatrixElement(i, j));
+            }
+        }
+
+    }
+
+
+    /**
+     * Contstctor of vector - matrix (1D)
+     *
+     * @param vectorB vaules of vector
+     */
+    public Matrix(@NotNull ArrayList<Double> vectorB) {
+        matrix.add(0, new ArrayList<Double>(vectorB.size()));
+        for (int i = 0; i < vectorB.size(); ++i) {
+            matrix.get(0).add(i, vectorB.get(i));
+        }
+    }
+
+    public Matrix getSubMatrix(int[] r, int j0, int j1) {
+        Matrix X = new Matrix(r.length, j1 - j0 + 1);
+        Matrix B = new Matrix(X);
+        try {
+            for (int i = 0; i < r.length; i++) {
+                for (int j = j0; j <= j1; j++) {
+                    B.setMatrixElement(i, j - j0, matrix.get(r[i]).get(j));
+                    //Try perhaps that solution System.arraycopy(matrix.get(0), j0, B.se);
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException exeption) {
+            throw new ArrayIndexOutOfBoundsException("Submatrix indices");
+        }
+        return X;
+
+    }
+
+
+    /**
+     * Get selected matrix element
+     *
+     * @param row    Row number to select
+     * @param column Column number to select
+     * @return Selected matrix eleent
+     */
+    public double getMatrixElement(int row, int column) {
+        return matrix.get(row).get(column);
+    }
+
+
+    /**
+     * Set selected element in matrix
+     *
+     * @param rowElement    Element of selected index in row
+     * @param columnElement Element of selected index in column
+     * @param matrixValue   Value to put into selected matrix index
+     */
+
+    public void setMatrixElement(int rowElement, int columnElement, Double matrixValue) {
 
         this.getRow(rowElement).set(columnElement, matrixValue);
     }
 
+
+    /**
+     * Adding new row to matrix
+     * @param row Row to add to matrix
+     */
     public void addMatrixRow(ArrayList<Double> row) {
 
         matrix.add(row);

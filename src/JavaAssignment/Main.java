@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -23,9 +25,22 @@ public class Main extends Application {
         Matrix mat;
         mat = new Matrix(2, 4);
 
-        mat.setMatrixRow(1, 1, 232.3);
-        mat.setMatrixRow(0, 0, 12.0);
+        mat.setMatrixElement(1, 1, 232.3);
+        mat.setMatrixElement(0, 0, 12.0);
+        mat.setMatrixElement(1, 0, 3124124.2);
         mat.display();
+        System.out.println("1 1 is: " + mat.getMatrixElement(1, 1));
+
+        Matrix matrix1 = new Matrix(mat);
+
+        ArrayList<Double> LUrowi = new ArrayList<Double>();
+
+        LUrowi = matrix1.getRow(0);
+        System.out.println("MAT 1 is: " + LUrowi);
+        matrix1.display();
+    }
+
+
 
     }
-}
+
