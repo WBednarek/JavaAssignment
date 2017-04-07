@@ -26,7 +26,7 @@ public class LUDeconposition {
             piv[i] = i;
         }
         pivsign = 1;
-        ArrayList<Double> LUrowi = new ArrayList<Double>();
+        ArrayList<Double> LUrowi;
         //double[] LUColj = new double[m];
         ArrayList<Double> LUcolj = new ArrayList<Double>(m);
 
@@ -70,7 +70,8 @@ public class LUDeconposition {
 
             }
 
-            if (j < m & LU.getMatrixElement(j, j) != 0.0) {
+            Double el = LU.getMatrixElement(j, j);
+            if (j < m & el != 0.0) {
                 for (int i = j + 1; i < m; ++i) {
                     LU.setMatrixElement(i, j, (LU.getMatrixElement(i, j) / LU.getMatrixElement(j, j)));
                 }
@@ -187,6 +188,10 @@ public class LUDeconposition {
         }
 
 
+    }
+
+    public Matrix solve(ArrayList<Double> b) throws RuntimeException {
+        return solve(new Matrix(b));
     }
 }
 

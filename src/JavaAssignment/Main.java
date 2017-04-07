@@ -23,11 +23,11 @@ public class Main extends Application {
         primaryStage.show();
 
         Matrix mat;
-        mat = new Matrix(2, 4);
+        mat = new Matrix(2, 2);
 
-        mat.setMatrixElement(1, 1, 232.3);
+        mat.setMatrixElement(1, 1, 232.0);
         mat.setMatrixElement(0, 0, 12.0);
-        mat.setMatrixElement(1, 0, 3124124.2);
+        mat.setMatrixElement(1, 0, 3412.0);
         mat.display();
         System.out.println("1 1 is: " + mat.getMatrixElement(1, 1));
 
@@ -38,6 +38,13 @@ public class Main extends Application {
         LUrowi = matrix1.getRow(0);
         System.out.println("MAT 1 is: " + LUrowi);
         matrix1.display();
+
+
+        LUDeconposition LUDec = new LUDeconposition(mat);
+        System.out.println("L:");
+        LUDec.getL().display();
+
+
     }
 
 
