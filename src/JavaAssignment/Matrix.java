@@ -12,21 +12,20 @@ import java.util.ArrayList;
  */
 public class Matrix {
 
-
-    private ArrayList<ArrayList<Integer>> matrix;
+    private ArrayList<ArrayList<Double>> matrix;
 
     /**
      * Default Constructor.
      */
     public Matrix() {
-        matrix = new ArrayList<ArrayList<Integer>>();
+        matrix = new ArrayList<ArrayList<Double>>();
     }
 
     /**
      * Constructor
      */
     public Matrix(int numOfRows, int numOfColumns) {
-
+        matrix = new ArrayList<ArrayList<Double>>();
 
         /**
          * Ensuring minimum capacity for number of rows in matrix
@@ -44,20 +43,31 @@ public class Matrix {
          * Initializing matrix with zeros
          */
         for (int i = 0; i < numOfRows; ++i) {
-            ArrayList<Integer> list = new ArrayList<Integer>();
+            ArrayList<Double> list = new ArrayList<Double>();
             matrix.add(list);
             for (int j = 0; j < numOfColumns; ++j) {
-                list.add(0);
+                list.add(0.0);
             }
         }
 
     }
 
+    public void setMatrixRow(int rowElement, int columnElement, Double matrixValue) {
+
+        this.getRow(rowElement).set(columnElement, matrixValue);
+    }
+
+    public void addMatrixRow(ArrayList<Double> row) {
+
+        matrix.add(row);
+    }
+
+
     /**
      * @return Number of rows in matrix
      */
 
-    private int getNumOfRows() {
+    public int getNumOfRows() {
         return matrix.size();
     }
 
@@ -66,7 +76,7 @@ public class Matrix {
      *
      * @return Number of columns in matrix
      */
-    private int getNumOfColumns() {
+    public int getNumOfColumns() {
         return matrix.get(0).size();
     }
 
@@ -77,7 +87,7 @@ public class Matrix {
      * @param rowNumber Selected row number to return
      * @return ArrayList with values of selected row
      */
-    private ArrayList<Integer> getRow(int rowNumber) {
+    public ArrayList<Double> getRow(int rowNumber) {
         return matrix.get(rowNumber);
     }
 
@@ -87,15 +97,23 @@ public class Matrix {
      * @param columnNumber Selected column number to return
      * @return ArrayList with values of selected column
      */
-    private ArrayList<Integer> getColumn(int columnNumber) {
-        ArrayList<Integer> tmp = new ArrayList<Integer>();
+    public ArrayList<Double> getColumn(int columnNumber) {
+        ArrayList<Double> tmp = new ArrayList<Double>();
 
-        for (int i = 0; i < this.getNumOfRows(); ++i) {
+        for (int i = 0; i <= this.getNumOfRows(); ++i) {
             tmp.add(matrix.get(columnNumber).get(i));
         }
 
         return tmp;
     }
+
+    /**
+     * Displaying content of matrix
+     */
+    public void display() {
+        System.out.println(matrix);
+    }
+
 
 
 }

@@ -1,8 +1,11 @@
 package JavaAssignment.Controller;
 
+import JavaAssignment.Matrix;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -35,6 +38,8 @@ public class Controller {
 
     private String initialInfo;
 
+    private Matrix inputMatrix;
+
     public Controller() {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
     }
@@ -55,6 +60,36 @@ public class Controller {
         }
 
         return true;
+    }
+
+
+    public void getMatrix() {
+        String textMatrix = matrixArea.getText();
+        String[] rows = textMatrix.trim().split("\n");
+        int vectorLength = this.readSingleVector(rows).size();
+
+        if (rows.length > 1) {
+            inputMatrix = new Matrix(vectorLength, vectorLength);
+            for (int i = 0; i < vectorLength; ++i) {
+                String[] row = rows[i].trim().split("\\s+");
+                for (int j = 0; j < vectorLength; ++j) {
+                    inputMatrix.setMatrixRow(i, j, Double.valueOf(row[j]));
+                }
+            }
+            inputMatrix.display();
+        }
+
+    }
+
+    public ArrayList<Double> readSingleVector(String[] rows) {
+
+        String[] oneRow = rows[0].trim().split("\\s+");
+        ArrayList<Double> singleVector = new ArrayList<Double>();
+        for (int i = 0; i < oneRow.length; ++i) {
+            singleVector.add(i, Double.valueOf(oneRow[i]));
+        }
+
+        return singleVector;
     }
 
     public void evaluateIsMatrixSquared() {
