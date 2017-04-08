@@ -39,9 +39,38 @@ public class Controller {
     @FXML
     protected TextArea infoArea;
 
+    /**
+     * Object used to manipulate button behaviour. That button is responsible to start LU Decomposition calculation.
+     * It binds Graphical JavaFX Button with that object.
+     */
     @FXML
     protected Button LUButton;
 
+    /**
+     * Object used to manipulate Inverse button behaviour. That button is responsible to start inverse matrix function.
+     * It binds Graphical JavaFX Button with that object.
+     */
+    @FXML
+    protected Button inverseButton;
+
+    /**
+     * Object used to manipulate Save button behaviour, which allows to save current results.
+     * It binds Graphical JavaFX Button with that object.
+     */
+    @FXML
+    protected Button saveButton;
+
+    /**
+     * Object used to manipulate button behaviour, which allows to load current results.
+     * It binds Graphical JavaFX Button with that object.
+     */
+    @FXML
+    protected Button loadButton;
+
+
+    /**
+     * Simple initial info in information TextArea.
+     */
     private String initialInfo;
 
     private Matrix inputMatrix;
@@ -53,6 +82,17 @@ public class Controller {
 
     }
 
+    /**
+     * Set buttons possibility to click.
+     *
+     * @param disableButtons Parameter sets buttons to be possible or impossible to click .
+     */
+    public void buttonsAccess(boolean disableButtons) {
+        LUButton.setDisable(disableButtons);
+        inverseButton.setDisable(disableButtons);
+        saveButton.setDisable(disableButtons);
+        loadButton.setDisable(disableButtons);
+    }
 
     public void disableButton(Button button) {
         if (!button.isDisabled()) ;
@@ -66,17 +106,33 @@ public class Controller {
     }
 
 
-    public boolean inputIsOnlyOneNumber() {
+    public void inputIsOnlyOneNumber() {
 
 
+    }
+
+    public void validator() {
         if (matrixArea.getLength() == 1) {
             System.out.println("Input is only one number");
             infoArea.setText("Your input is just one number");
         } else {
             infoArea.clear();
         }
+        getVector();
 
-        return true;
+
+    }
+
+    public void vectorValidator() {
+        if (matrixArea.getLength() == 1) {
+            System.out.println("Input is only one number");
+            infoArea.setText("Your input is just one number");
+        } else {
+            infoArea.clear();
+        }
+        getVector();
+
+
     }
 
 
@@ -104,15 +160,23 @@ public class Controller {
         String[] rows = textVector.trim().split("\n");
         String[] row = new String[textVector.length()];
         int isVector = rows.length;
-        if (isVector == 1) {
-
-            row = rows[0].trim().split("\\s+");
-        } else {
+        if (isVector != 1) {
             infoArea.setText("Is not a vector");
+            buttonsAccess(true);
+        }
+        //|| t
+        else if (!textVector.matches("\\d+") && !textVector.matches("\\s+")) {
+            infoArea.setText("Vector input is non a number");
+            buttonsAccess(true);
+        } else {
+            buttonsAccess(false);
+            row = rows[0].trim().split("\\s+");
         }
         return row;
 
     }
+
+
 
 
     public ArrayList<Double> getVectorArray() {
@@ -175,6 +239,8 @@ public class Controller {
         resultsArea.clear();
         infoArea.setText(initialInfo);
     }
+
+
 
 
 }
