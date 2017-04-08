@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Wiktor Bednarek on 2017-04-07.
  */
-public class LUDeconposition {
+public class LUDecomposition {
 
     private int[] piv;
     private int pivsign;
@@ -15,7 +15,7 @@ public class LUDeconposition {
     private int n;
 
 
-    public LUDeconposition(Matrix A) {
+    public LUDecomposition(Matrix A) {
 
         LU = new Matrix(A);
         m = A.getNumOfRows();
@@ -149,7 +149,7 @@ public class LUDeconposition {
             throw new RuntimeException("Matrix is singular.");
         } else {
             // Copy right hand side with pivoting
-            int nx = B.getNumOfColumns();
+            int nx = B.getNumOfRows();
             Matrix Xmat = B.getSubMatrix(piv, 0, nx - 1);
 
             Matrix X = new Matrix(Xmat);
@@ -160,7 +160,7 @@ public class LUDeconposition {
                     for (int j = 0; j < nx; j++) {
                         //X[i][j] -= X[k][j] * LU[i][k];
                         result = X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
-                        X.setMatrixElement(i, j, result);
+                        X.setMatrixElement(i, j, (X.getMatrixElement(i, j) - result));
                     }
                 }
             }

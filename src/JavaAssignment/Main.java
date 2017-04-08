@@ -29,7 +29,7 @@ public class Main extends Application {
         mat.setMatrixElement(0, 0, 12.0);
         mat.setMatrixElement(1, 0, 3412.0);
         mat.display();
-        System.out.println("1 1 is: " + mat.getMatrixElement(1, 1));
+        System.out.println("Num of columns is: " + mat.getNumOfColumns());
 
         Matrix matrix1 = new Matrix(mat);
 
@@ -40,9 +40,26 @@ public class Main extends Application {
         matrix1.display();
 
 
-        LUDeconposition LUDec = new LUDeconposition(mat);
+        LUDecomposition LUDec = new LUDecomposition(mat);
         System.out.println("L:");
         LUDec.getL().display();
+
+        System.out.println("U:");
+        LUDec.getU().display();
+
+        System.out.println("Determinant:");
+        System.out.println(LUDec.det());
+
+        ArrayList<Double> solution = new ArrayList<Double>();
+        solution.add(4.0);
+        solution.add(5.0);
+        /*Matrix sol = new Matrix(solution);
+        System.out.println("Solution: ");
+        sol.display();*/
+
+        System.out.println("Original arraylist is: " + solution);
+        System.out.print("Solution: ");
+        LUDec.solve(solution).display();
 
 
     }

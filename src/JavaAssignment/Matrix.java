@@ -94,6 +94,7 @@ public class Matrix {
      * @param vectorB vaules of vector
      */
     public Matrix(@NotNull ArrayList<Double> vectorB) {
+        matrix = new ArrayList<ArrayList<Double>>();
         matrix.add(0, new ArrayList<Double>(vectorB.size()));
         for (int i = 0; i < vectorB.size(); ++i) {
             matrix.get(0).add(i, vectorB.get(i));
@@ -105,8 +106,12 @@ public class Matrix {
         Matrix B = new Matrix(X);
         try {
             for (int i = 0; i < r.length; i++) {
+
+                //System.arraycopy(matrix.get(0).get(r[i]), j0, B.);
+
                 for (int j = j0; j <= j1; j++) {
-                    B.setMatrixElement(i, j - j0, matrix.get(r[i]).get(j));
+
+                    B.setMatrixElement(i, j - j0, matrix.get(j).get(r[i]));
                     //Try perhaps that solution System.arraycopy(matrix.get(0), j0, B.se);
                 }
             }
