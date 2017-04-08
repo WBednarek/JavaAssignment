@@ -60,6 +60,8 @@ public class Main extends Application {
         System.out.println("Original arraylist is: " + solution);
         System.out.print("Solution: ");
         LUDec.solve(solution).display();
+        System.out.print("Inverse matrix: ");
+        LUDec.inverseMatrix().display();
 
 
     }

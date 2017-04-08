@@ -101,27 +101,32 @@ public class Matrix {
         }
     }
 
+    public static Matrix identityMatrix(int numberOfRows, int numberOfColumns) {
+        Matrix A = new Matrix(numberOfRows, numberOfColumns);
+        Matrix X = new Matrix(A);
+        for (int i = 0; i < numberOfRows; i++) {
+            for (int j = 0; j < numberOfColumns; j++) {
+                X.setMatrixElement(i, j, (i == j ? 1.0 : 0.0));
+            }
+        }
+        return A;
+    }
+
     public Matrix getSubMatrix(int[] r, int j0, int j1) {
         Matrix X = new Matrix(r.length, j1 - j0 + 1);
         Matrix B = new Matrix(X);
         try {
             for (int i = 0; i < r.length; i++) {
-
-                //System.arraycopy(matrix.get(0).get(r[i]), j0, B.);
-
                 for (int j = j0; j <= j1; j++) {
-
                     B.setMatrixElement(i, j - j0, matrix.get(j).get(r[i]));
-                    //Try perhaps that solution System.arraycopy(matrix.get(0), j0, B.se);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException exeption) {
-            throw new ArrayIndexOutOfBoundsException("Submatrix indices");
+            throw new ArrayIndexOutOfBoundsException("Out of Boundaty");
         }
         return X;
 
     }
-
 
     /**
      * Get selected matrix element
@@ -133,7 +138,6 @@ public class Matrix {
     public double getMatrixElement(int row, int column) {
         return matrix.get(row).get(column);
     }
-
 
     /**
      * Set selected element in matrix
@@ -148,7 +152,6 @@ public class Matrix {
         this.getRow(rowElement).set(columnElement, matrixValue);
     }
 
-
     /**
      * Adding new row to matrix
      * @param row Row to add to matrix
@@ -157,7 +160,6 @@ public class Matrix {
 
         matrix.add(row);
     }
-
 
     /**
      * @return Number of rows in matrix
@@ -175,7 +177,6 @@ public class Matrix {
     public int getNumOfColumns() {
         return matrix.get(0).size();
     }
-
 
     /**
      * Returns ArrayList of values of selected row

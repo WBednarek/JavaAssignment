@@ -27,7 +27,6 @@ public class LUDecomposition {
         }
         pivsign = 1;
         ArrayList<Double> LUrowi;
-        //double[] LUColj = new double[m];
         ArrayList<Double> LUcolj = new ArrayList<Double>(m);
 
         for (int j = 0; j < n; ++j) {
@@ -154,33 +153,27 @@ public class LUDecomposition {
 
             Matrix X = new Matrix(Xmat);
             Double result = 0.0;
-            // Solving L*Y = B(piv,:)
             for (int k = 0; k < n; k++) {
                 for (int i = k + 1; i < n; i++) {
                     for (int j = 0; j < nx; j++) {
-                        //X[i][j] -= X[k][j] * LU[i][k];
                         result = X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
                         X.setMatrixElement(i, j, (X.getMatrixElement(i, j) - result));
                     }
                 }
             }
-            // Solving U*X = Y;
             Double division;
-            Double substracion;
+            Double subtraction;
             for (int k = n - 1; k >= 0; k--) {
                 for (int j = 0; j < nx; j++) {
-
                     division = X.getMatrixElement(k, j) / LU.getMatrixElement(k, k);
                     X.setMatrixElement(k, j, division);
 
-                    // X[k][j] /= LU[k][k];
                 }
                 for (int i = 0; i < k; i++) {
                     for (int j = 0; j < nx; j++) {
 
-                        substracion = X.getMatrixElement(i, j) - X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
-                        X.setMatrixElement(i, j, substracion);
-                        // X[i][j] -= X[k][j] * LU[i][k];
+                        subtraction = X.getMatrixElement(i, j) - X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
+                        X.setMatrixElement(i, j, subtraction);
                     }
                 }
             }
@@ -192,6 +185,10 @@ public class LUDecomposition {
 
     public Matrix solve(ArrayList<Double> b) throws RuntimeException {
         return solve(new Matrix(b));
+    }
+
+    public Matrix inverseMatrix() {
+        return solve(Matrix.identityMatrix(n, m));
     }
 }
 
