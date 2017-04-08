@@ -3,7 +3,7 @@ package JavaAssignment;
 import java.util.ArrayList;
 
 /**
- * Created by Wiktor Bednarek on 2017-04-07.
+ * Created by Wiktor Bednarek
  */
 public class LUDecomposition {
 
@@ -145,7 +145,7 @@ public class LUDecomposition {
     public Matrix solve(Matrix B) {
 
         if (!this.isNonSingular()) {
-            throw new RuntimeException("Matrix is singular.");
+            throw new RuntimeException("Your matrix is singular");
         } else {
             // Copy right hand side with pivoting
             int nx = B.getNumOfRows();

@@ -11,7 +11,7 @@
         <Label layoutX="3.0" layoutY="168.0" text="A = "/>
         <Label layoutX="403.0" layoutY="168.0" text="b = "/>
         <TextArea fx:id="resultsArea" layoutX="28.0" layoutY="323.0" prefHeight="238.0" prefWidth="747.0"/>
-        <Button fx:id="LUButton" layoutX="169.0" layoutY="578.0" mnemonicParsing="false" onAction="#getMatrix"
+        <Button fx:id="LUButton" layoutX="169.0" layoutY="578.0" mnemonicParsing="false" onAction="#calculateLU"
                 prefHeight="35.0" prefWidth="78.0" text="LU Pivot"/>
         <Button fx:id="inverseButton" layoutX="364.0" layoutY="578.0" mnemonicParsing="false" prefHeight="35.0"
                 prefWidth="78.0" text="Inverse"/>

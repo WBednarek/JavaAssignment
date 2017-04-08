@@ -16,7 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Design.fxml"));
 
         primaryStage.setTitle("Java assignment Wiktor Bednarek");
         primaryStage.setScene(new Scene(root, 800, 700));
@@ -28,6 +28,19 @@ public class Main extends Application {
         mat.setMatrixElement(1, 1, 232.0);
         mat.setMatrixElement(0, 0, 12.0);
         mat.setMatrixElement(1, 0, 3412.0);
+
+        String display = String.valueOf(mat.getMatrixElement(1, 1));
+        System.out.println("DISPLAY: " + display);
+        /*StringBuilder builder = new StringBuilder();
+
+        for (int row = 0; row <= mat.getNumOfRows(); row++) {
+            for (String value : mat.getRow(row)) {
+                builder.append(value);
+            }
+
+        }*/
+
+
         mat.display();
         System.out.println("Num of columns is: " + mat.getNumOfColumns());
 

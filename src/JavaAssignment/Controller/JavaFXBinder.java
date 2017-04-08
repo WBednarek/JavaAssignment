@@ -6,5 +6,4 @@ package JavaAssignment.Controller;
 public class JavaFXBinder {
 
 
-
 }

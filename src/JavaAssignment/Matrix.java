@@ -1,7 +1,7 @@
 package JavaAssignment;
 
 /**
- * Created by Wiktor Bednarek on 2017-04-06.
+ * Created by Wiktor Bednarek
  */
 
 
@@ -89,9 +89,9 @@ public class Matrix {
 
 
     /**
-     * Contstctor of vector - matrix (1D)
+     * Constructor of vector - matrix (1D)
      *
-     * @param vectorB vaules of vector
+     * @param vectorB values of vector
      */
     public Matrix(@NotNull ArrayList<Double> vectorB) {
         matrix = new ArrayList<ArrayList<Double>>();
