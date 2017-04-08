@@ -115,6 +115,7 @@ public class Matrix {
     public Matrix getSubMatrix(int[] r, int j0, int j1) {
         Matrix X = new Matrix(r.length, j1 - j0 + 1);
         Matrix B = new Matrix(X);
+
         try {
             for (int i = 0; i < r.length; i++) {
                 for (int j = j0; j <= j1; j++) {
@@ -124,6 +125,7 @@ public class Matrix {
         } catch (ArrayIndexOutOfBoundsException exeption) {
             throw new ArrayIndexOutOfBoundsException("Out of Boundaty");
         }
+
         return X;
 
     }

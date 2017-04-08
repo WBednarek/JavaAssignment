@@ -5,6 +5,7 @@ import JavaAssignment.LUDecomposition;
 import JavaAssignment.Matrix;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import java.util.ArrayList;
@@ -37,13 +38,14 @@ public class Controller {
      */
     @FXML
     protected TextArea infoArea;
-
+    @FXML
+    protected Button LUButton;
     private String initialInfo;
-
     private Matrix inputMatrix;
 
     public Controller() {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
+
     }
 
 
@@ -72,9 +74,9 @@ public class Controller {
         int vectorLength = this.readSingleVector(rows).size();
         Matrix inputMatrixToGet = new Matrix(vectorLength, vectorLength);
         if (rows.length > 1) {
-
+            String[] row;
             for (int i = 0; i < vectorLength; ++i) {
-                String[] row = rows[i].trim().split("\\s+");
+                row = rows[i].trim().split("\\s+");
                 for (int j = 0; j < vectorLength; ++j) {
                     inputMatrixToGet.setMatrixElement(i, j, Double.valueOf(row[j]));
                 }
@@ -84,37 +86,50 @@ public class Controller {
         return inputMatrixToGet;
     }
 
+    public String[] getVector() {
+        String textVector = vectorArea.getText();
+        String[] rows = textVector.trim().split("\n");
+        String[] row = new String[textVector.length()];
+        int isVector = rows.length;
+        if (isVector == 1) {
+
+            row = rows[0].trim().split("\\s+");
+        } else {
+            infoArea.setText("Is not a vector");
+        }
+        return row;
+
+    }
+
+
+    public ArrayList<Double> getVectorArray() {
+        String textVector = vectorArea.getText();
+        String[] rows = textVector.trim().split("\n");
+        String[] row = new String[textVector.length()];
+        int isVector = rows.length;
+        ArrayList<Double> vector = new ArrayList<Double>(textVector.length());
+        if (isVector == 1) {
+
+            row = rows[0].trim().split("\\s+");
+            for (int i = 0; i < row.length; ++i) {
+                vector.add(i, Double.valueOf(row[i]));
+            }
+        } else {
+            infoArea.setText("Is not a vector");
+        }
+        return vector;
+
+    }
+
     public void calculateLU() {
+
         System.out.println("GET MATRIX: ");
         getMatrix().display();
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
 
-        Displayer displayer = new Displayer(getMatrix(), LUDec);
+        Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
         resultsArea.setText(displayer.displayLUDecomposition());
 
-
-
-
-       /* LUDec.getL().display();
-
-        System.out.println("U:");
-        LUDec.getU().display();
-
-        System.out.println("Determinant:");
-        System.out.println(LUDec.det());
-
-        ArrayList<Double> solution = new ArrayList<Double>();
-        solution.add(4.0);
-        solution.add(5.0);
-        *//*Matrix sol = new Matrix(solution);
-        System.out.println("Solution: ");
-        sol.display();*//*
-
-        System.out.println("Original arraylist is: " + solution);
-        System.out.print("Solution: ");
-        LUDec.solve(solution).display();
-        System.out.print("Inverse matrix: ");
-        LUDec.inverseMatrix().display();*/
     }
 
 

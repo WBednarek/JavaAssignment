@@ -36,9 +36,7 @@ public class Main extends Application {
         for (int row = 0; row <= mat.getNumOfRows(); row++) {
             for (String value : mat.getRow(row)) {
                 builder.append(value);
-            }
-
-        }*/
+            }*/
 
 
         mat.display();
@@ -66,9 +64,9 @@ public class Main extends Application {
         ArrayList<Double> solution = new ArrayList<Double>();
         solution.add(4.0);
         solution.add(5.0);
-        /*Matrix sol = new Matrix(solution);
+        Matrix sol = new Matrix(solution);
         System.out.println("Solution: ");
-        sol.display();*/
+        sol.display();
 
         System.out.println("Original arraylist is: " + solution);
         System.out.print("Solution: ");
@@ -78,8 +76,5 @@ public class Main extends Application {
 
 
     }
-
-
-
     }
 
