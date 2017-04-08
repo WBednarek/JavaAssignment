@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -24,19 +22,28 @@ public class Main extends Application {
 
         Matrix mat;
         mat = new Matrix(2, 2);
-
+        /*
         mat.setMatrixElement(1, 1, 232.0);
         mat.setMatrixElement(0, 0, 12.0);
         mat.setMatrixElement(1, 0, 3412.0);
 
+
+        mat.setMatrixElement(0, 0, 232.0);
+        mat.setMatrixElement(0, 0, 12.0);
+        mat.setMatrixElement(1, 0, 3412.0);
+        mat.setMatrixElement(1, 0, 3412.0);
+
         String display = String.valueOf(mat.getMatrixElement(1, 1));
         System.out.println("DISPLAY: " + display);
-        /*StringBuilder builder = new StringBuilder();
 
-        for (int row = 0; row <= mat.getNumOfRows(); row++) {
-            for (String value : mat.getRow(row)) {
-                builder.append(value);
-            }*/
+
+
+//        StringBuilder builder = new StringBuilder();
+//
+//        for (int row = 0; row <= mat.getNumOfRows(); row++) {
+//            for (String value : mat.getRow(row)) {
+//                builder.append(value);
+//            }
 
 
         mat.display();
@@ -53,7 +60,7 @@ public class Main extends Application {
 
         LUDecomposition LUDec = new LUDecomposition(mat);
         System.out.println("L:");
-        LUDec.getL().display();
+        LUDec.getLowerMatrix().display();
 
         System.out.println("U:");
         LUDec.getU().display();
@@ -73,7 +80,7 @@ public class Main extends Application {
         LUDec.solve(solution).display();
         System.out.print("Inverse matrix: ");
         LUDec.inverseMatrix().display();
-
+*/
 
     }
     }

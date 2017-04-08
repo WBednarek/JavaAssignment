@@ -38,16 +38,28 @@ public class Controller {
      */
     @FXML
     protected TextArea infoArea;
+
     @FXML
     protected Button LUButton;
+
     private String initialInfo;
+
     private Matrix inputMatrix;
+
 
     public Controller() {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
 
+
     }
 
+
+    public void disableButton(Button button) {
+        if (!button.isDisabled()) ;
+        {
+            button.setDisable(true);
+        }
+    }
 
     public void pressButon(ActionEvent event) {
         System.out.println("Java assignment");
@@ -55,6 +67,7 @@ public class Controller {
 
 
     public boolean inputIsOnlyOneNumber() {
+
 
         if (matrixArea.getLength() == 1) {
             System.out.println("Input is only one number");
@@ -123,13 +136,19 @@ public class Controller {
 
     public void calculateLU() {
 
-        System.out.println("GET MATRIX: ");
-        getMatrix().display();
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
-
         Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
-        resultsArea.setText(displayer.displayLUDecomposition());
+        resultsArea.setText(displayer.displayLUDecomposition(1));
 
+    }
+
+    /**
+     * Called when Inverse button pressed. Calculating inverse matrix form TextArea.
+     */
+    public void calculateIverseMatrix() {
+        LUDecomposition LUDec = new LUDecomposition(getMatrix());
+        Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
+        resultsArea.setText(displayer.displayLUDecomposition(2));
     }
 
 

@@ -1,7 +1,5 @@
 package JavaAssignment;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -34,56 +32,54 @@ public class Displayer {
 
     }
 
+    public String displayInverseMatrix() {
+        int rows = toDisplay.getNumOfRows();
+        LUDisplay.inverseMatrix();
+        return new String();
+    }
 
+    public String displayLUDecomposition(int operation) {
 
-    public String displayLUDecomposition() {
         String description = "LU Decomposition with scaled partial pivoting\n";
         String originalMatrix = "Original matrix\n" + displayMatrix(toDisplay) + "\n";
         String originalVector = "Original vector\n" + displayVector(vector) + "\n";
-        String lowerMatrix = "Lower matrix\n" + displayMatrix(LUDisplay.getL()) + "\n";
+        String lowerMatrix = "Lower matrix\n" + displayMatrix(LUDisplay.getLowerMatrix()) + "\n";
         String upperMatrix = "Uppper matrix\n" + displayMatrix(LUDisplay.getU()) + "\n";
-        String solution = "Solution\n" + displayMatrix(LUDisplay.solve(vectorArray)) + "\n";
         String determinant = "Determinant = " + LUDisplay.det() + "\n";
+        String solution = "";
+        switch (operation) {
+            case 1:
+                String LUsolution = "Solution\n" + displayMatrix(LUDisplay.solve(vectorArray)) + "\n";
+                solution = description + originalMatrix + originalVector + lowerMatrix + upperMatrix + LUsolution + determinant;
+                break;
+            case 2:
+                String inverseMatrixSolution = "Inverse matrix\n" + displayMatrix(LUDisplay.inverseMatrix()) + "\n";
+                solution = description + originalMatrix + originalVector + lowerMatrix + upperMatrix + inverseMatrixSolution + determinant;
+                break;
+            default:
+                break;
+        }
+        return solution;
+    }
 
 
+/*
 
         DecimalFormat df = new DecimalFormat("#.0000000", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+*/
 
 
-        System.out.println("L:");
-        LUDisplay.getL().display();
 
-        System.out.println("U:");
-        LUDisplay.getU().display();
 
-        System.out.println("Determinant:");
-        System.out.println(LUDisplay.det());
-
-        ArrayList<Double> solution1 = new ArrayList<Double>();
-        solution1.add(4.0);
-        solution1.add(5.0);
-        /*Matrix sol = new Matrix(solution);
-        System.out.println("Solution: ");
-        sol.display();*/
-
-        System.out.println("Original arraylist is: " + solution);
-        System.out.print("Solution: ");
-        LUDisplay.solve(solution1).display();
-        System.out.print("Inverse matrix: ");
-        LUDisplay.inverseMatrix().display();
-
-        String concatenation = description + originalMatrix + originalVector + lowerMatrix + upperMatrix + solution + determinant;
-        return concatenation;
-    }
 
     public String displayVector(String[] vec) {
-        /*DecimalFormat df = new DecimalFormat("#.#######");
 
         for(int i = 0; i < vec.length; ++i)
         {
-            vec[i] = String.format("%.3f", Double.valueOf(vec[i]));
-        }*/
+            vec[i] = String.format(Locale.ENGLISH, "%.7f", Double.valueOf(vec[i]));
+
+        }
 
         String displayVector = Arrays.toString(vec);
         String showVector = "";

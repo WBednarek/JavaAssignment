@@ -13,8 +13,8 @@
         <TextArea fx:id="resultsArea" layoutX="28.0" layoutY="323.0" prefHeight="238.0" prefWidth="747.0"/>
         <Button fx:id="LUButton" layoutX="169.0" layoutY="578.0" mnemonicParsing="false" onAction="#calculateLU"
                 prefHeight="35.0" prefWidth="78.0" text="LU Pivot"/>
-        <Button fx:id="inverseButton" layoutX="364.0" layoutY="578.0" mnemonicParsing="false" prefHeight="35.0"
-                prefWidth="78.0" text="Inverse"/>
+        <Button fx:id="inverseButton" layoutX="364.0" layoutY="578.0" mnemonicParsing="false"
+                onAction="#calculateIverseMatrix" prefHeight="35.0" prefWidth="78.0" text="Inverse"/>
         <Button fx:id="clearButton" layoutX="561.0" layoutY="578.0" mnemonicParsing="false" onAction="#clearButton"
                 prefHeight="35.0" prefWidth="78.0" text="Clear"/>
         <Button fx:id="loadButton" layoutX="561.0" layoutY="643.0" mnemonicParsing="false" prefHeight="35.0"

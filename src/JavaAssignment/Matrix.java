@@ -123,7 +123,7 @@ public class Matrix {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException exeption) {
-            throw new ArrayIndexOutOfBoundsException("Out of Boundaty");
+            throw new ArrayIndexOutOfBoundsException("Out of Boundary");
         }
 
         return X;

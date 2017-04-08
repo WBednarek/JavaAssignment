@@ -80,7 +80,7 @@ public class LUDecomposition {
 
     }
 
-    public Matrix getL() {
+    public Matrix getLowerMatrix() {
         Matrix X = new Matrix(m, n);
         Matrix L = new Matrix(X);
 
