@@ -73,20 +73,40 @@ public class Controller {
      */
     private String initialInfo;
 
+
     private Matrix inputMatrix;
 
-    private boolean isMatrixProperlyset;
+    /**
+     * Boolean value checking if matrix in input TextArea is valid.
+     * Checking if matrix doesn't contain illegal characters, is non singular, have proper dimensions (is squared).
+     */
+    private boolean isMatrixProperlySet;
 
-    private boolean isVectorProperlyset;
+    /**
+     * Boolean value checking if vector in input TextArea is valid.
+     * Checking if vector doesn't contain illegal characters, is non singular, have proper dimensions (has only one row).
+     */
+    private boolean isVectorProperlySet;
 
+
+    /**
+     * Size of one matrix row
+     */
     private int sizeOfMatrix;
+    /**
+     * Size vector
+     */
     private int sizeOfVector;
 
 
+    /**
+     * Default constructor.
+     * Initializing initialInfo value, and setting initial
+     */
     public Controller() {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
-        isMatrixProperlyset = false;
-        isVectorProperlyset = false;
+        isMatrixProperlySet = false;
+        isVectorProperlySet = false;
 
 
     }
@@ -178,8 +198,8 @@ public class Controller {
             buttonsAccess(true);
         } else {
             //Matrix is valid
-            isMatrixProperlyset = true;
-            if (isVectorProperlyset && sizeOfMatrix == sizeOfVector) {
+            isMatrixProperlySet = true;
+            if (isVectorProperlySet && sizeOfMatrix == sizeOfVector) {
                 buttonsAccess(false);
                 String[] row;
                 for (int i = 0; i < vectorLength; ++i) {
@@ -225,8 +245,8 @@ public class Controller {
             buttonsAccess(true);
         } else {
             // Vector is valid
-            isVectorProperlyset = true;
-            if (isMatrixProperlyset && sizeOfMatrix == sizeOfVector) {
+            isVectorProperlySet = true;
+            if (isMatrixProperlySet && sizeOfMatrix == sizeOfVector) {
                 buttonsAccess(false);
                 row = rows[0].trim().split("\\s+");
             } else {
@@ -301,6 +321,7 @@ public class Controller {
         vectorArea.clear();
         resultsArea.clear();
         infoArea.setText(initialInfo);
+        buttonsAccess(true);
     }
 
 

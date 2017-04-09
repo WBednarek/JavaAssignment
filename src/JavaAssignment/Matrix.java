@@ -101,6 +101,13 @@ public class Matrix {
         }
     }
 
+    /**
+     * Calculating inverse matrix
+     *
+     * @param numberOfRows    Number of rows of matrix to inverse
+     * @param numberOfColumns Number of columns of matrix to inverse
+     * @return Inverted matrix
+     */
     public static Matrix identityMatrix(int numberOfRows, int numberOfColumns) {
         Matrix A = new Matrix(numberOfRows, numberOfColumns);
         Matrix X = new Matrix(A);
@@ -112,6 +119,14 @@ public class Matrix {
         return A;
     }
 
+
+    /**
+     *
+     * @param r
+     * @param j0
+     * @param j1
+     * @return
+     */
     public Matrix getSubMatrix(int[] r, int j0, int j1) {
         Matrix X = new Matrix(r.length, j1 - j0 + 1);
         Matrix B = new Matrix(X);
