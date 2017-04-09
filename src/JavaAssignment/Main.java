@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Design.fxml"));
 
         primaryStage.setTitle("Java assignment Wiktor Bednarek");
-        primaryStage.setScene(new Scene(root, 800, 700));
+        primaryStage.setScene(new Scene(root, 800, 770));
         primaryStage.show();
 
         Matrix mat;

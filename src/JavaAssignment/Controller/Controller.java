@@ -180,6 +180,7 @@ public class Controller {
             //Matrix is valid
             isMatrixProperlyset = true;
             if (isVectorProperlyset && sizeOfMatrix == sizeOfVector) {
+                buttonsAccess(false);
                 String[] row;
                 for (int i = 0; i < vectorLength; ++i) {
                     row = rows[i].trim().split("\\s+");
