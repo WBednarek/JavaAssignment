@@ -44,7 +44,7 @@ public class Displayer {
         String originalMatrix = "Original matrix\n" + displayMatrix(toDisplay) + "\n";
         String originalVector = "Original vector\n" + displayVector(vector) + "\n";
         String lowerMatrix = "Lower matrix\n" + displayMatrix(LUDisplay.getLowerMatrix()) + "\n";
-        String upperMatrix = "Uppper matrix\n" + displayMatrix(LUDisplay.getU()) + "\n";
+        String upperMatrix = "Uppper matrix\n" + displayMatrix(LUDisplay.getUpperMatrix()) + "\n";
         String determinant = "Determinant = " + LUDisplay.det() + "\n";
         String solution = "";
         switch (operation) {

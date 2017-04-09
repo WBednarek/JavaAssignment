@@ -1,17 +1,17 @@
 package JavaAssignment;
 
-/**
- * Created by Wiktor Bednarek
- */
+
 
 
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
-
 /**
+ * Matrix is based od 2 dimensional ArrayList of Doubles - ArrayList<ArrayList<Double>>.
  * Matrix class allows to crate matrix based on ArrayList of ArrayList.
+ * @author Wiktor Bednarek
  */
+
 public class Matrix {
 
     private ArrayList<ArrayList<Double>> matrix;
@@ -54,29 +54,28 @@ public class Matrix {
 
     }
 
-
     /**
-     * Copy Constructor
+     * Copy Constructor.
      *
-     * @param mat Matrix to copy
+     * @param mat Matrix to copy.
      */
     public Matrix(Matrix mat) {
 
         matrix = new ArrayList<ArrayList<Double>>();
         /**
-         * Ensuring minimum capacity for number of rows in matrix
+         * Ensuring minimum capacity for number of rows in matrix.
          */
         matrix.ensureCapacity(mat.getNumOfRows());
 
         /**
-         * Ensuring minimum capacity for number of columns in matrix
+         * Ensuring minimum capacity for number of columns in matrix.
          */
         for (int i = 0; i < mat.getNumOfRows(); ++i) {
             matrix.ensureCapacity(mat.getNumOfColumns());
         }
 
         /**
-         * Copying elements to matrix
+         * Copying elements to matrix.
          */
         for (int i = 0; i < mat.getNumOfRows(); ++i) {
             matrix.add(i, mat.getRow(i));
@@ -89,9 +88,10 @@ public class Matrix {
 
 
     /**
-     * Constructor of vector - matrix (1D)
+     * Constructor of vector - matrix (1D).
+     * Input vector must not be null.
      *
-     * @param vectorB values of vector
+     * @param vectorB values of vector.
      */
     public Matrix(@NotNull ArrayList<Double> vectorB) {
         matrix = new ArrayList<ArrayList<Double>>();
@@ -102,11 +102,10 @@ public class Matrix {
     }
 
     /**
-     * Calculating inverse matrix
-     *
-     * @param numberOfRows    Number of rows of matrix to inverse
-     * @param numberOfColumns Number of columns of matrix to inverse
-     * @return Inverted matrix
+     * Calculate inverse matrix.
+     * @param numberOfRows    Number of rows of matrix to inverse.
+     * @param numberOfColumns Number of columns of matrix to inverse.
+     * @return Inverted matrix.
      */
     public static Matrix identityMatrix(int numberOfRows, int numberOfColumns) {
         Matrix A = new Matrix(numberOfRows, numberOfColumns);
@@ -121,11 +120,12 @@ public class Matrix {
 
 
     /**
-     *
-     * @param r
-     * @param j0
-     * @param j1
-     * @return
+     * Returning submatrix.
+     * @param r Array contains row indices.
+     * @param j0 Index of initial column.
+     * @param j1 Final index od column.
+     * @return Matrix A(r(:), j0:j1).
+     * @exception ArrayIndexOutOfBoundsException
      */
     public Matrix getSubMatrix(int[] r, int j0, int j1) {
         Matrix X = new Matrix(r.length, j1 - j0 + 1);
@@ -146,22 +146,22 @@ public class Matrix {
     }
 
     /**
-     * Get selected matrix element
+     * Get selected matrix element.
      *
-     * @param row    Row number to select
-     * @param column Column number to select
-     * @return Selected matrix eleent
+     * @param row    Row number to select.
+     * @param column Column number to select.
+     * @return Selected matrix element.
      */
     public double getMatrixElement(int row, int column) {
         return matrix.get(row).get(column);
     }
 
     /**
-     * Set selected element in matrix
+     * Set selected element in matrix.
      *
-     * @param rowElement    Element of selected index in row
-     * @param columnElement Element of selected index in column
-     * @param matrixValue   Value to put into selected matrix index
+     * @param rowElement    Element of selected index in row.
+     * @param columnElement Element of selected index in column.
+     * @param matrixValue   Value to put into selected matrix index.
      */
 
     public void setMatrixElement(int rowElement, int columnElement, Double matrixValue) {
@@ -170,8 +170,9 @@ public class Matrix {
     }
 
     /**
-     * Adding new row to matrix
-     * @param row Row to add to matrix
+     * Adding new row to matrix.
+     *
+     * @param row Row to add to matrix.
      */
     public void addMatrixRow(ArrayList<Double> row) {
 
@@ -179,7 +180,8 @@ public class Matrix {
     }
 
     /**
-     * @return Number of rows in matrix
+     * Get number of matrix row.
+     * @return Number of rows in matrix.
      */
 
     public int getNumOfRows() {
@@ -187,29 +189,29 @@ public class Matrix {
     }
 
     /**
-     * Returns number of columns in matrix
+     * Returns number of columns in matrix.
      *
-     * @return Number of columns in matrix
+     * @return Number of columns in matrix.
      */
     public int getNumOfColumns() {
         return matrix.get(0).size();
     }
 
     /**
-     * Returns ArrayList of values of selected row
+     * Returns ArrayList of values of selected row.
      *
-     * @param rowNumber Selected row number to return
-     * @return ArrayList with values of selected row
+     * @param rowNumber Selected row number to return.
+     * @return ArrayList with values of selected row.
      */
     public ArrayList<Double> getRow(int rowNumber) {
         return matrix.get(rowNumber);
     }
 
     /**
-     * Returns ArrayList of values of selected column
+     * Returns ArrayList of values of selected column.
      *
-     * @param columnNumber Selected column number to return
-     * @return ArrayList with values of selected column
+     * @param columnNumber Selected column number to return.
+     * @return ArrayList with values of selected column.
      */
     public ArrayList<Double> getColumn(int columnNumber) {
         ArrayList<Double> tmp = new ArrayList<Double>();
@@ -222,12 +224,11 @@ public class Matrix {
     }
 
     /**
-     * Displaying content of matrix
+     * Displaying content of matrix.
      */
     public void display() {
         System.out.println(matrix);
     }
-
 
 
 }
