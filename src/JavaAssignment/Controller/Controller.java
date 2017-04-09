@@ -75,9 +75,18 @@ public class Controller {
 
     private Matrix inputMatrix;
 
+    private boolean isMatrixProperlyset;
+
+    private boolean isVectorProperlyset;
+
+    private int sizeOfMatrix;
+    private int sizeOfVector;
+
 
     public Controller() {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
+        isMatrixProperlyset = false;
+        isVectorProperlyset = false;
 
 
     }
@@ -94,13 +103,14 @@ public class Controller {
         loadButton.setDisable(disableButtons);
     }
 
+    /*
     public void disableButton(Button button) {
         if (!button.isDisabled()) ;
         {
             button.setDisable(true);
         }
     }
-
+*/
     public void pressButon(ActionEvent event) {
         System.out.println("Java assignment");
     }
@@ -118,7 +128,7 @@ public class Controller {
         } else {
             infoArea.clear();
         }
-        getVector();
+        getMatrix();
 
 
     }
@@ -130,6 +140,7 @@ public class Controller {
         } else {
             infoArea.clear();
         }
+
         getVector();
 
 
@@ -141,36 +152,87 @@ public class Controller {
         String textMatrix = matrixArea.getText();
         String[] rows = textMatrix.trim().split("\n");
         int vectorLength = this.readSingleVector(rows).size();
-        Matrix inputMatrixToGet = new Matrix(vectorLength, vectorLength);
-        if (rows.length > 1) {
-            String[] row;
-            for (int i = 0; i < vectorLength; ++i) {
-                row = rows[i].trim().split("\\s+");
-                for (int j = 0; j < vectorLength; ++j) {
-                    inputMatrixToGet.setMatrixElement(i, j, Double.valueOf(row[j]));
-                }
-            }
-            inputMatrixToGet.display();
+        sizeOfMatrix = vectorLength;
+        String[] trimmedRow = new String[vectorLength];
+        for (int i = 0; i < rows.length; ++i) {
+            trimmedRow = rows[i].trim().split("\\s+");
+
         }
+        //System.out.println("TRIMMED ROW:" + Arrays.toString(trimmedRow) );
+        System.out.println("TRIMMED ROW:" + trimmedRow.length);
+        System.out.println("ROWS: length " + rows.length);
+        System.out.println("Vector length: " + vectorLength);
+        System.out.println();
+
+        Matrix inputMatrixToGet = new Matrix(vectorLength, vectorLength);
+        if (rows.length <= 1) {
+            infoArea.setText("Is not a matrix");
+            buttonsAccess(true);
+        } else if ((!textMatrix.matches("[0-9\\s]+"))) {
+            infoArea.setText("One of inputs in matrix field is non a number");
+            buttonsAccess(true);
+        }
+        //Matrix is not squared   && rows[0].length() == trimmedRow.length    trimmedRow.length != rows.length) &&
+        else if ((trimmedRow.length != rows.length) || (trimmedRow.length != vectorLength)) {
+            infoArea.setText("Matrix is not squared");
+            buttonsAccess(true);
+        } else {
+            //Matrix is valid
+            isMatrixProperlyset = true;
+            if (isVectorProperlyset && sizeOfMatrix == sizeOfVector) {
+                String[] row;
+                for (int i = 0; i < vectorLength; ++i) {
+                    row = rows[i].trim().split("\\s+");
+                    for (int j = 0; j < vectorLength; ++j) {
+                        inputMatrixToGet.setMatrixElement(i, j, Double.valueOf(row[j]));
+                    }
+                }
+                inputMatrixToGet.display();
+            } else {
+                infoArea.setText("Please also input proper vector.\nRemember dimensions of matrix and vector must be the same");
+            }
+
+
+        }
+
         return inputMatrixToGet;
     }
+
 
     public String[] getVector() {
         String textVector = vectorArea.getText();
         String[] rows = textVector.trim().split("\n");
         String[] row = new String[textVector.length()];
+
+        String[] trimmedVector = new String[rows.length];
+
+        trimmedVector = rows[0].trim().split("\\s+");
+
+
+        sizeOfVector = trimmedVector.length;
+
+
+
         int isVector = rows.length;
         if (isVector != 1) {
             infoArea.setText("Is not a vector");
             buttonsAccess(true);
         }
-        //|| t
-        else if (!textVector.matches("\\d+") && !textVector.matches("\\s+")) {
-            infoArea.setText("Vector input is non a number");
+        //&& !textVector.matches("\\s+")
+        else if ((!textVector.matches("[0-9\\s]+"))) {
+            infoArea.setText("One of inputs in vector field is non a number");
             buttonsAccess(true);
         } else {
-            buttonsAccess(false);
-            row = rows[0].trim().split("\\s+");
+            // Vector is valid
+            isVectorProperlyset = true;
+            if (isMatrixProperlyset && sizeOfMatrix == sizeOfVector) {
+                buttonsAccess(false);
+                row = rows[0].trim().split("\\s+");
+            } else {
+                infoArea.setText("Please also input proper matrix.\nRemember dimensions of matrix and vector must be the same");
+            }
+
+
         }
         return row;
 
