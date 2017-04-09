@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 /*
 TO DO
- - DISPLAY resolution
  - Docummentation
  - Save and load functions
  - Non number error in matrix first row

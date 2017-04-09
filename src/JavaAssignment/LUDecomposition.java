@@ -3,21 +3,33 @@ package JavaAssignment;
 import java.util.ArrayList;
 
 /**
+ * Calculate LU Decomposition of selected {@link Matrix}.
  * Created by Wiktor Bednarek
  */
 public class LUDecomposition {
-
+    /**
+     * Array pivot.
+     */
     private int[] pivot;
-    private int pivsign;
-    private Matrix LU;
+    /**
+     * Sign of pivot.
+     */
+    private int singOfPivot;
+    /**
+     * Matrix for decomposition.
+     */
+    private Matrix LUMatrix;
 
+    /**
+     * Number of matrix rows.
+     */
     private int numberOfMatrixRows;
     private int numberOfMatrixColumns;
 
 
     public LUDecomposition(Matrix A) {
 
-        LU = new Matrix(A);
+        LUMatrix = new Matrix(A);
         numberOfMatrixRows = A.getNumOfRows();
         numberOfMatrixColumns = A.getNumOfColumns();
         pivot = new int[numberOfMatrixRows];
@@ -25,18 +37,18 @@ public class LUDecomposition {
         for (int i = 0; i < numberOfMatrixRows; ++i) {
             pivot[i] = i;
         }
-        pivsign = 1;
+        singOfPivot = 1;
         ArrayList<Double> LUrowi;
         ArrayList<Double> LUcolj = new ArrayList<Double>(numberOfMatrixRows);
 
         for (int j = 0; j < numberOfMatrixColumns; ++j) {
 
             for (int i = 0; i < numberOfMatrixRows; ++i) {
-                LUcolj.add(i, LU.getMatrixElement(i, j));
+                LUcolj.add(i, LUMatrix.getMatrixElement(i, j));
             }
 
             for (int i = 0; i < numberOfMatrixRows; ++i) {
-                LUrowi = LU.getRow(i);
+                LUrowi = LUMatrix.getRow(i);
 
                 int kmax = Math.min(i, j);
                 double s = 0.0;
@@ -57,22 +69,22 @@ public class LUDecomposition {
             }
             if (p != j) {
                 for (int k = 0; k < numberOfMatrixColumns; ++k) {
-                    double t = LU.getMatrixElement(p, k);
-                    LU.setMatrixElement(p, k, LU.getMatrixElement(j, k));
-                    LU.setMatrixElement(j, k, t);
+                    double t = LUMatrix.getMatrixElement(p, k);
+                    LUMatrix.setMatrixElement(p, k, LUMatrix.getMatrixElement(j, k));
+                    LUMatrix.setMatrixElement(j, k, t);
                 }
 
                 int k = pivot[p];
                 pivot[p] = pivot[j];
                 pivot[j] = k;
-                pivsign = -pivsign;
+                singOfPivot = -singOfPivot;
 
             }
 
-            Double el = LU.getMatrixElement(j, j);
+            Double el = LUMatrix.getMatrixElement(j, j);
             if (j < numberOfMatrixRows & el != 0.0) {
                 for (int i = j + 1; i < numberOfMatrixRows; ++i) {
-                    LU.setMatrixElement(i, j, (LU.getMatrixElement(i, j) / LU.getMatrixElement(j, j)));
+                    LUMatrix.setMatrixElement(i, j, (LUMatrix.getMatrixElement(i, j) / LUMatrix.getMatrixElement(j, j)));
                 }
             }
 
@@ -87,7 +99,7 @@ public class LUDecomposition {
         for (int i = 0; i < numberOfMatrixRows; i++) {
             for (int j = 0; j < numberOfMatrixColumns; j++) {
                 if (i > j) {
-                    L.setMatrixElement(i, j, LU.getMatrixElement(i, j));
+                    L.setMatrixElement(i, j, LUMatrix.getMatrixElement(i, j));
                 } else if (i == j) {
                     L.setMatrixElement(i, j, 1.0);
                 } else {
@@ -105,7 +117,7 @@ public class LUDecomposition {
             for (int j = 0; j < numberOfMatrixColumns; j++) {
                 if (i <= j) {
 
-                    U.setMatrixElement(i, j, LU.getMatrixElement(i, j));
+                    U.setMatrixElement(i, j, LUMatrix.getMatrixElement(i, j));
                 } else {
                     U.setMatrixElement(i, j, 0.0);
                 }
@@ -125,9 +137,9 @@ public class LUDecomposition {
         if (numberOfMatrixRows != numberOfMatrixColumns) {
             throw new IllegalArgumentException("Matrix must be square.");
         }
-        double d = pivsign;
+        double d = singOfPivot;
         for (int j = 0; j < numberOfMatrixColumns; j++) {
-            d *= LU.getMatrixElement(j, j);
+            d *= LUMatrix.getMatrixElement(j, j);
 
         }
         return d;
@@ -135,7 +147,7 @@ public class LUDecomposition {
 
     public boolean isNonSingular() {
         for (int j = 0; j < numberOfMatrixColumns; j++) {
-            if (LU.getMatrixElement(j, j) == 0)
+            if (LUMatrix.getMatrixElement(j, j) == 0)
                 return false;
         }
         return true;
@@ -156,7 +168,7 @@ public class LUDecomposition {
             for (int k = 0; k < numberOfMatrixColumns; k++) {
                 for (int i = k + 1; i < numberOfMatrixColumns; i++) {
                     for (int j = 0; j < nx; j++) {
-                        result = X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
+                        result = X.getMatrixElement(k, j) * LUMatrix.getMatrixElement(i, k);
                         X.setMatrixElement(i, j, (X.getMatrixElement(i, j) - result));
                     }
                 }
@@ -165,14 +177,14 @@ public class LUDecomposition {
             Double subtraction;
             for (int k = numberOfMatrixColumns - 1; k >= 0; k--) {
                 for (int j = 0; j < nx; j++) {
-                    division = X.getMatrixElement(k, j) / LU.getMatrixElement(k, k);
+                    division = X.getMatrixElement(k, j) / LUMatrix.getMatrixElement(k, k);
                     X.setMatrixElement(k, j, division);
 
                 }
                 for (int i = 0; i < k; i++) {
                     for (int j = 0; j < nx; j++) {
 
-                        subtraction = X.getMatrixElement(i, j) - X.getMatrixElement(k, j) * LU.getMatrixElement(i, k);
+                        subtraction = X.getMatrixElement(i, j) - X.getMatrixElement(k, j) * LUMatrix.getMatrixElement(i, k);
                         X.setMatrixElement(i, j, subtraction);
                     }
                 }

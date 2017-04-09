@@ -78,16 +78,20 @@ public class Displayer {
         for(int i = 0; i < vec.length; ++i)
         {
             vec[i] = String.format(Locale.ENGLISH, "%.7f", Double.valueOf(vec[i]));
+            //Add additional space in displaying
+            vec[i] = vec[i] + " ";
 
         }
 
         String displayVector = Arrays.toString(vec);
         String showVector = "";
         showVector += "\t";
+
         showVector += displayVector.replace(",", "")  //remove the commas
                 .replace("[", "")  //remove the right bracket
                 .replace("]", "")  //remove the left bracket
                 .trim();
+
         showVector += "\n";
 
 
@@ -95,19 +99,15 @@ public class Displayer {
     }
 
     public String displayMatrix(Matrix toDisplay) {
-        String displayMatrix = "";
+        StringBuilder displayMatrix = new StringBuilder();
         for (int row = 0; row < toDisplay.getNumOfRows(); row++) {
-            displayMatrix += "\t";
-            displayMatrix += toDisplay.getRow(row).toString()
-                    .replace(",", "")  //remove the commas
-                    .replace("[", "")  //remove the right bracket
-                    .replace("]", "")  //remove the left bracket
-                    .trim();
-            displayMatrix += "\n";
+            displayMatrix.append("\t");
+            for (int column = 0; column < toDisplay.getNumOfColumns(); column++) {
+                displayMatrix.append(String.format(Locale.ENGLISH, "%.7f", toDisplay.getMatrixElement(row, column))).append("  ");
+            }
+            displayMatrix.append("\n");
         }
-        return displayMatrix;
-
+        return displayMatrix.toString();
     }
-
 
 }
