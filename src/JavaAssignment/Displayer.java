@@ -5,40 +5,53 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * Created by Wiktor Bednarek
+ * Prepare to display selected operation output in resultsArea based on data from input areas: matrix TextArea and vector TextArea.
+ * @author Wiktor Bednarek.
  */
 public class Displayer {
 
-
+    /**
+     * Matrix from matrix input TextArea.
+     */
     private Matrix toDisplay;
 
-    private LUDecomposition LUDisplay;
-
+    /**
+     * Vector from vector input TextArea as array of Strings.
+     */
     private String[] vector;
 
+    /**
+     * Vector from vector input TextArea as ArrayList of Doubles.
+     */
     private ArrayList<Double> vectorArray;
 
     /**
-     * Constructor
-     *
-     * @param toDisplay Matrix from input field
-     * @param LUdisplay Object to perform LU decomposition and matrix inversion calculations
+     * Object to perform LU Decomposition and inverse matrix.
      */
-    public Displayer(Matrix toDisplay, String[] vector, ArrayList<Double> vectorArray, LUDecomposition LUdisplay) {
+    private LUDecomposition LUDisplay;
+
+    /**
+     * Constructor
+     * @param toDisplay Matrix from matrix input TextArea.
+     * @param vector Vector from vector input TextArea as array of Strings.
+     * @param vectorArray Vector from vector input TextArea as ArrayList of Doubles.
+     * @param LUDisplay Object to perform LU Decomposition and inverse matrix.
+     */
+    public Displayer(Matrix toDisplay, String[] vector, ArrayList<Double> vectorArray, LUDecomposition LUDisplay) {
         this.toDisplay = toDisplay;
         this.vector = vector;
         this.vectorArray = vectorArray;
-        this.LUDisplay = LUdisplay;
+        this.LUDisplay = LUDisplay;
 
     }
 
-    public String displayInverseMatrix() {
-        int rows = toDisplay.getNumOfRows();
-        LUDisplay.inverseMatrix();
-        return new String();
-    }
-
-    public String displayLUDecomposition(int operation) {
+    /**
+     * Display solution in results TextArea of selected operation: LU Decomposition or Inverse matrix.
+     *
+     * @param operation Takes values: 1 for LU Decomposition, 2 for Inverse matrix.
+     * @return String with solution of LU Decomposition or Inverse matrix.
+     */
+    public String displaySolution(int operation) {
 
         String description = "LU Decomposition with scaled partial pivoting\n";
         String originalMatrix = "Original matrix\n" + displayMatrix(toDisplay) + "\n";
@@ -62,21 +75,14 @@ public class Displayer {
         return solution;
     }
 
-
-/*
-
-        DecimalFormat df = new DecimalFormat("#.0000000", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-        final DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-*/
-
-
-
-
-
+    /**
+     * Prepare vector from vector input TextArea to display in output TextArea.
+     * @param vec Vector from vector input TextArea as array of Strings.
+     * @return Vector prepared to display in output TextArea.
+     */
     public String displayVector(String[] vec) {
 
-        for(int i = 0; i < vec.length; ++i)
-        {
+        for(int i = 0; i < vec.length; ++i) {
             vec[i] = String.format(Locale.ENGLISH, "%.7f", Double.valueOf(vec[i]));
             //Add additional space in displaying
             vec[i] = vec[i] + " ";
@@ -85,29 +91,40 @@ public class Displayer {
 
         String displayVector = Arrays.toString(vec);
         String showVector = "";
+        //Add tab before vector
         showVector += "\t";
-
+        //
         showVector += displayVector.replace(",", "")  //remove the commas
                 .replace("[", "")  //remove the right bracket
                 .replace("]", "")  //remove the left bracket
                 .trim();
-
         showVector += "\n";
 
 
         return showVector;
     }
 
+    /**
+     * Prepare matrix from matrix input TextArea to display in output TextArea.
+     * @param toDisplay Matrix from matrix input TextArea.
+     * @return Matrix prepared to display in output TextArea.
+     */
+
     public String displayMatrix(Matrix toDisplay) {
         StringBuilder displayMatrix = new StringBuilder();
         for (int row = 0; row < toDisplay.getNumOfRows(); row++) {
             displayMatrix.append("\t");
             for (int column = 0; column < toDisplay.getNumOfColumns(); column++) {
+                //Set displayMatrix elements with decimal precision of 7 places.
                 displayMatrix.append(String.format(Locale.ENGLISH, "%.7f", toDisplay.getMatrixElement(row, column))).append("  ");
             }
             displayMatrix.append("\n");
         }
         return displayMatrix.toString();
     }
+    /*
+        DecimalFormat df = new DecimalFormat("#.0000000", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        final DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+*/
 
 }

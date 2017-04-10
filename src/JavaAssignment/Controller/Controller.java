@@ -14,7 +14,6 @@ import java.util.ArrayList;
 /**
  * Class is responsible for calculations and input validation.
  * It determines if in input TextAreas for matrix and vector is correct, doesn't contain illegal characters.
- *
  * @author Wiktor Bednarek
  */
 
@@ -22,54 +21,54 @@ public class Controller {
 
 
     /**
-     * Object used to make possible operations in matrix input text field.
+     * Object {@link javafx.scene.control.TextArea} is used to make possible data processing from input from matrix input TextArea.
      * It binds Graphical JavaFX TextArea with that object.
      */
     @FXML
     protected TextArea matrixArea;
     /**
-     * Object used to make possible operations in vector input text field.
+     * Object {@link javafx.scene.control.TextArea} is used to make possible data processing from input from vector input TextArea.
      * It binds Graphical JavaFX TextArea with that object.
      */
     @FXML
     protected TextArea vectorArea;
     /**
-     * Object used to display results in results TextArea.
+     * Object {@link javafx.scene.control.TextArea} is used to display results in results TextArea.
      * It binds Graphical JavaFX TextArea with that object.
      */
     @FXML
     protected TextArea resultsArea;
 
     /**
-     * Object used to display current program status in information area.
+     * Object {@link javafx.scene.control.TextArea} used to display current program status in information area.
      * It binds Graphical JavaFX TextArea with that object.
      */
     @FXML
     protected TextArea infoArea;
 
     /**
-     * Object used to manipulate button behaviour. That button is responsible to start LU Decomposition calculation.
+     * Object {@link javafx.scene.control.Button} used to manipulate button behaviour. That button is responsible to start LU Decomposition calculation.
      * It binds Graphical JavaFX Button with that object.
      */
     @FXML
     protected Button LUButton;
 
     /**
-     * Object used to manipulate Inverse button behaviour. That button is responsible to start inverse matrix function.
+     * Object {@link javafx.scene.control.Button} used to manipulate Inverse button behaviour. That button is responsible to start inverse matrix function.
      * It binds Graphical JavaFX Button with that object.
      */
     @FXML
     protected Button inverseButton;
 
     /**
-     * Object used to manipulate Save button behaviour, which allows to save current results.
+     * Object {@link javafx.scene.control.Button} used to manipulate Save button behaviour, which allows to save current results.
      * It binds Graphical JavaFX Button with that object.
      */
     @FXML
     protected Button saveButton;
 
     /**
-     * Object used to manipulate button behaviour, which allows to load current results.
+     * Object {@link javafx.scene.control.Button} used to manipulate button behaviour, which allows to load current results.
      * It binds Graphical JavaFX Button with that object.
      */
     @FXML
@@ -158,9 +157,7 @@ public class Controller {
         } else {
             infoArea.clear();
         }
-
         getVector();
-
 
     }
 
@@ -178,11 +175,6 @@ public class Controller {
             trimmedRow = rows[i].trim().split("\\s+");
 
         }
-
-       /* System.out.println("TRIMMED ROW:" + trimmedRow.length);
-        System.out.println("ROWS: length " + rows.length);
-        System.out.println("Vector length: " + vectorLength);
-        System.out.println();*/
 
         Matrix inputMatrixToGet = new Matrix(vectorLength, vectorLength);
         //Is only one row.
@@ -213,12 +205,10 @@ public class Controller {
                         inputMatrixToGet.setMatrixElement(i, j, Double.valueOf(row[j]));
                     }
                 }
-                inputMatrixToGet.display();
+                //inputMatrixToGet.display();
             } else {
                 infoArea.setText("Please also input proper vector.\nRemember dimensions of matrix and vector must be the same");
             }
-
-
         }
 
         return inputMatrixToGet;
@@ -251,7 +241,7 @@ public class Controller {
             infoArea.setText("One of inputs in vector field is non a number");
             buttonsAccess(true);
         } else {
-            // Vector is valid.
+            //This else executes only if vector is valid.
             isVectorProperlySet = true;
             if (isMatrixProperlySet && sizeOfMatrix == sizeOfVector) {
                 buttonsAccess(false);
@@ -271,14 +261,14 @@ public class Controller {
      */
     public ArrayList<Double> getVectorArray() {
         String textVector = vectorArea.getText();
-        //Split
+        //Split input by rows
         String[] rows = textVector.trim().split("\n");
         String[] row = new String[textVector.length()];
         int isVector = rows.length;
         ArrayList<Double> vector = new ArrayList<Double>(textVector.length());
-        //If there is only one row we can assume that is vector.
+        //If there is only one row that means that is vector.
         if (isVector == 1) {
-
+            //Ignore whitespaces in rows and assign rows content without whitespaces to row.
             row = rows[0].trim().split("\\s+");
             for (int i = 0; i < row.length; ++i) {
                 vector.add(i, Double.valueOf(row[i]));
@@ -298,7 +288,7 @@ public class Controller {
 
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
         Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
-        resultsArea.setText(displayer.displayLUDecomposition(1));
+        resultsArea.setText(displayer.displaySolution(1));
 
     }
 
@@ -309,7 +299,7 @@ public class Controller {
     public void calculateIverseMatrix() {
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
         Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
-        resultsArea.setText(displayer.displayLUDecomposition(2));
+        resultsArea.setText(displayer.displaySolution(2));
     }
 
 

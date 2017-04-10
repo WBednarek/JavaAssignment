@@ -1,19 +1,20 @@
 package JavaAssignment;
 
 
-
-
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 /**
- * Matrix is based od 2 dimensional ArrayList of Doubles - ArrayList<ArrayList<Double>>.
+ * Matrix is based on 2 dimensional ArrayList of Doubles.
  * Matrix class allows to crate matrix based on ArrayList of ArrayList.
  * @author Wiktor Bednarek
  */
 
 public class Matrix {
 
+    /**
+     * Matrix data field based on 2 dimensional ArrayList of Doubles.
+     */
     private ArrayList<ArrayList<Double>> matrix;
 
     /**
@@ -24,7 +25,9 @@ public class Matrix {
     }
 
     /**
-     * Constructor
+     * Initializes matrix numOfRows-by-numOfColumns.
+     * @param numOfRows Number of matrix rows.
+     * @param numOfColumns Number of matrix columns.
      */
     public Matrix(int numOfRows, int numOfColumns) {
         matrix = new ArrayList<ArrayList<Double>>();
@@ -90,8 +93,7 @@ public class Matrix {
     /**
      * Constructor of vector - matrix (1D).
      * Input vector must not be null.
-     *
-     * @param vectorB values of vector.
+     * @param vectorB Values of input vector.
      */
     public Matrix(@NotNull ArrayList<Double> vectorB) {
         matrix = new ArrayList<ArrayList<Double>>();
@@ -123,9 +125,9 @@ public class Matrix {
      * Returning submatrix.
      * @param r Array contains row indices.
      * @param j0 Index of initial column.
-     * @param j1 Final index od column.
+     * @param j1 Final index of column.
      * @return Matrix A(r(:), j0:j1).
-     * @exception ArrayIndexOutOfBoundsException
+     * @exception ArrayIndexOutOfBoundsException Out of matrix boundary.
      */
     public Matrix getSubMatrix(int[] r, int j0, int j1) {
         Matrix X = new Matrix(r.length, j1 - j0 + 1);
@@ -209,7 +211,6 @@ public class Matrix {
 
     /**
      * Returns ArrayList of values of selected column.
-     *
      * @param columnNumber Selected column number to return.
      * @return ArrayList with values of selected column.
      */

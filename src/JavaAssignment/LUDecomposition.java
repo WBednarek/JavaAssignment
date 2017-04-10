@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 /**
  * Calculate LU Decomposition of selected {@link Matrix}.
- * Created by Wiktor Bednarek
+ * @author Wiktor Bednarek.
  */
 public class LUDecomposition {
     /**
-     * Array pivot.
+     * Array of pivot.
      */
     private int[] pivot;
     /**
@@ -16,7 +16,7 @@ public class LUDecomposition {
      */
     private int singOfPivot;
     /**
-     * Matrix for decomposition.
+     * Matrix field for decomposition.
      */
     private Matrix LUMatrix;
 
@@ -24,9 +24,16 @@ public class LUDecomposition {
      * Number of matrix rows.
      */
     private int numberOfMatrixRows;
+    /**
+     * Number of matrix columns.
+     */
     private int numberOfMatrixColumns;
 
-
+    /**
+     * LU Decomposition constructor.
+     *
+     * @param A Square matrix to decompose.
+     */
     public LUDecomposition(Matrix A) {
 
         LUMatrix = new Matrix(A);
@@ -34,13 +41,14 @@ public class LUDecomposition {
         numberOfMatrixColumns = A.getNumOfColumns();
         pivot = new int[numberOfMatrixRows];
 
+
         for (int i = 0; i < numberOfMatrixRows; ++i) {
             pivot[i] = i;
         }
         singOfPivot = 1;
         ArrayList<Double> LUrowi;
         ArrayList<Double> LUcolj = new ArrayList<Double>(numberOfMatrixRows);
-
+        //Initial loop
         for (int j = 0; j < numberOfMatrixColumns; ++j) {
 
             for (int i = 0; i < numberOfMatrixRows; ++i) {
@@ -49,7 +57,7 @@ public class LUDecomposition {
 
             for (int i = 0; i < numberOfMatrixRows; ++i) {
                 LUrowi = LUMatrix.getRow(i);
-
+                //Dot product.
                 int kmax = Math.min(i, j);
                 double s = 0.0;
                 for (int k = 0; k < kmax; ++k) {
@@ -60,6 +68,7 @@ public class LUDecomposition {
                 LUrowi.set(j, LUcolj.get(i));
             }
 
+            //Pivot calculation and exchange
             int p = j;
 
             for (int i = j + 1; i < numberOfMatrixRows; ++i) {
@@ -92,6 +101,10 @@ public class LUDecomposition {
 
     }
 
+    /**
+     * Get lower triangular matrix.
+     * @return Matrix object of lower triangular matrix.
+     */
     public Matrix getLowerMatrix() {
         Matrix X = new Matrix(numberOfMatrixRows, numberOfMatrixColumns);
         Matrix L = new Matrix(X);
@@ -110,6 +123,10 @@ public class LUDecomposition {
         return X;
     }
 
+    /**
+     * Get upper triangular matrix.
+     * @return Matrix object of upper triangular matrix.
+     */
     public Matrix getUpperMatrix() {
         Matrix X = new Matrix(numberOfMatrixColumns, numberOfMatrixColumns);
         Matrix U = new Matrix(X);
@@ -132,7 +149,10 @@ public class LUDecomposition {
      * @return pivot
      */
 
-
+    /**
+     *  Compute matrix determinant.
+     * @return Determinant of matrix.
+     */
     public double det() {
         if (numberOfMatrixRows != numberOfMatrixColumns) {
             throw new IllegalArgumentException("Matrix must be square.");
@@ -145,7 +165,12 @@ public class LUDecomposition {
         return d;
     }
 
-    public boolean isNonSingular() {
+    /**
+     * Check if matrix is singular.
+     *
+     * @return Boolean value if martix is non singular.
+     */
+    public boolean isMatrixNonSingular() {
         for (int j = 0; j < numberOfMatrixColumns; j++) {
             if (LUMatrix.getMatrixElement(j, j) == 0)
                 return false;
@@ -153,18 +178,24 @@ public class LUDecomposition {
         return true;
     }
 
-
+    /**
+     * Solve following problem A*X = B
+     * @param B Matrix with number of rows of A and any number of columns.
+     * @return Object Matrix XMat where L*U*XMat = B(piv,:)
+     * @exception RuntimeException That matrix is singular.
+     */
     public Matrix solve(Matrix B) {
 
-        if (!this.isNonSingular()) {
+        if (!this.isMatrixNonSingular()) {
             throw new RuntimeException("Your matrix is singular");
         } else {
-            // Copy right hand side with pivoting
+            // Initialise local Matrix with pivoting.
             int nx = B.getNumOfRows();
-            Matrix Xmat = B.getSubMatrix(pivot, 0, nx - 1);
+            Matrix XMat = B.getSubMatrix(pivot, 0, nx - 1);
 
-            Matrix X = new Matrix(Xmat);
+            Matrix X = new Matrix(XMat);
             Double result = 0.0;
+            //Compute L*Y = B(piv, :)
             for (int k = 0; k < numberOfMatrixColumns; k++) {
                 for (int i = k + 1; i < numberOfMatrixColumns; i++) {
                     for (int j = 0; j < nx; j++) {
@@ -175,6 +206,7 @@ public class LUDecomposition {
             }
             Double division;
             Double subtraction;
+            //Compute U*X = Y;
             for (int k = numberOfMatrixColumns - 1; k >= 0; k--) {
                 for (int j = 0; j < nx; j++) {
                     division = X.getMatrixElement(k, j) / LUMatrix.getMatrixElement(k, k);
@@ -189,16 +221,25 @@ public class LUDecomposition {
                     }
                 }
             }
-            return Xmat;
+            return XMat;
         }
-
 
     }
 
+    /**
+     * Solve following problem A*b = Y.
+     * @param b One dimensional ArrayList of Doubles (vector) which size is equal to matrix size.
+     * @return Matrix XMat where L*U*XMat = B(piv,:).
+     * @throws RuntimeException This matrix is singular.
+     */
     public Matrix solve(ArrayList<Double> b) throws RuntimeException {
         return solve(new Matrix(b));
     }
 
+    /**
+     * Calculate inverse matrix.
+     * @return Inverted Matrix.
+     */
     public Matrix inverseMatrix() {
         return solve(Matrix.identityMatrix(numberOfMatrixColumns, numberOfMatrixRows));
     }
