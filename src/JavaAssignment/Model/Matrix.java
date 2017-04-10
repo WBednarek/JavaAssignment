@@ -1,4 +1,4 @@
-package JavaAssignment;
+package JavaAssignment.Model;
 
 
 import com.sun.istack.internal.NotNull;

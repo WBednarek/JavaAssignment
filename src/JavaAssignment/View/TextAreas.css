@@ -1,0 +1,6 @@
+.text-area {
+    -fx-background-color: black;
+    -fx-animated: true;
+    -fx-font-size: 15px;
+    -fx-text-fill: black;
+}

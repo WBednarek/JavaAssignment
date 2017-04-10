@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="795.0"
+            xmlns="http://javafx.com/javafx/8.0.112" fx:controller="JavaAssignment.Controller.Controller"
+            style="-fx-background-color: #38494f">
+    <children>
+        <TextArea fx:id="matrixArea" layoutX="26.0" layoutY="50.0" onKeyReleased="#matrixValidator" prefHeight="252.0"
+                  prefWidth="350.0" stylesheets="@TextAreas.css"/>
+        <TextArea fx:id="vectorArea" layoutX="425.0" layoutY="50.0" onKeyReleased="#vectorValidator" prefHeight="252.0"
+                  prefWidth="350.0" stylesheets="@TextAreas.css"/>
+        <Label layoutX="3.0" layoutY="168.0" text="A = " style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+        <Label layoutX="403.0" layoutY="168.0" text="b = " style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+        <TextArea fx:id="resultsArea" layoutX="28.0" layoutY="323.0" prefHeight="252.0" prefWidth="747.0"
+                  style=" -fx-background-color: #696d75"/>
+        <Button fx:id="LUButton" disable="true" layoutX="171.0" layoutY="596.0" mnemonicParsing="false"
+                onAction="#calculateLU" prefHeight="35.0" prefWidth="78.0" text="LU Pivot"
+                style="-fx-background-color: #01b71b"/>
+        <Button fx:id="inverseButton" disable="true" layoutX="363.0" layoutY="596.0" mnemonicParsing="false"
+                onAction="#calculateIverseMatrix" prefHeight="35.0" prefWidth="78.0" text="Inverse"
+                style="-fx-background-color: #01b71b"/>
+        <Button fx:id="clearButton" layoutX="561.0" layoutY="596.0" mnemonicParsing="false" onAction="#clearButton"
+                prefHeight="35.0" prefWidth="78.0" text="Clear" style="-fx-background-color: #01b71b"/>
+        <Button fx:id="loadButton" disable="false" layoutX="561.0" layoutY="656.0" mnemonicParsing="false"
+                onAction="#loadFile" prefHeight="35.0" prefWidth="78.0" text="Load"
+                style="-fx-background-color: #01b71b"/>
+        <Button fx:id="saveButton" disable="true" layoutX="697.0" layoutY="656.0" mnemonicParsing="false"
+                onAction="#saveFile" prefHeight="35.0" prefWidth="78.0" text="Save"
+                style="-fx-background-color: #01b71b"/>
+        <TextArea fx:id="infoArea" layoutX="31.0" layoutY="651.0" prefHeight="44.0" prefWidth="437.0"
+                  text="Hello! Input or load matrix and vector to perform calculations."/>
+    </children>
+</AnchorPane>

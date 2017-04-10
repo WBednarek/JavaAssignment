@@ -1,4 +1,4 @@
-package JavaAssignment;
+package JavaAssignment.View;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +17,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 /*
 TO DO
- - Documentation!
- - Save and load functions
  - Non number error in matrix first row
  - isMatrixSingular validation
  - Add nice .css

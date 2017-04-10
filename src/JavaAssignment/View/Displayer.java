@@ -1,4 +1,7 @@
-package JavaAssignment;
+package JavaAssignment.View;
+
+import JavaAssignment.Model.LUDecomposition;
+import JavaAssignment.Model.Matrix;
 
 import java.util.ArrayList;
 import java.util.Arrays;

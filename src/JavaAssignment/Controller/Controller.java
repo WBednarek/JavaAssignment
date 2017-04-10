@@ -1,12 +1,15 @@
 package JavaAssignment.Controller;
 
-import JavaAssignment.Displayer;
-import JavaAssignment.LUDecomposition;
-import JavaAssignment.Matrix;
+import JavaAssignment.FileInputOutput;
+import JavaAssignment.Model.LUDecomposition;
+import JavaAssignment.Model.Matrix;
+import JavaAssignment.View.Displayer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -107,6 +110,16 @@ public class Controller {
 
 
     /**
+     * Application main design object.
+     */
+    @FXML
+    private AnchorPane anchorPane;
+
+    private boolean isAnyOperationCalculated;
+
+
+
+    /**
      * Default constructor.
      * Initializing initialInfo value, and setting initial matrix and vector validator value to false.
      */
@@ -114,21 +127,10 @@ public class Controller {
         initialInfo = "Hello! Input or load matrix and vector to perform calculations.";
         isMatrixProperlySet = false;
         isVectorProperlySet = false;
+        isAnyOperationCalculated = false;
 
 
     }
-
-    /**
-     * Set buttons (LUpivot, Inverse, Save and Load) usage - click possibility .
-     * @param disableButtons Parameter sets buttons to be possible or impossible to click .
-     */
-    public void buttonsAccess(boolean disableButtons) {
-        LUButton.setDisable(disableButtons);
-        inverseButton.setDisable(disableButtons);
-        saveButton.setDisable(disableButtons);
-        loadButton.setDisable(disableButtons);
-    }
-
 
     /**
      * When key on keyboard is pressed and content of matrix TextArea is changed it validates if data are proper.
@@ -179,17 +181,17 @@ public class Controller {
         Matrix inputMatrixToGet = new Matrix(vectorLength, vectorLength);
         //Is only one row.
         if (rows.length <= 1) {
-            infoArea.setText("Is not a matrix");
+            infoArea.setText("error in matrix input\nIs not a matrix");
             buttonsAccess(true);
         }
         //Check if input in text area contains non numbers excluding whitespaces.
         else if ((!textMatrix.matches("[0-9\\s]+"))) {
-            infoArea.setText("One of inputs in matrix field is non a number");
+            infoArea.setText("error in matrix input\nOne of inputs in matrix field is non a number");
             buttonsAccess(true);
         }
         //Check if matrix is squared.
         else if ((trimmedRow.length != rows.length) || (trimmedRow.length != vectorLength)) {
-            infoArea.setText("Matrix is not squared");
+            infoArea.setText("error in matrix input\nMatrix is not squared");
             buttonsAccess(true);
         }
         //After all cases assume matrix is valid and can be used for calculations.
@@ -197,6 +199,7 @@ public class Controller {
             //Matrix is valid
             isMatrixProperlySet = true;
             if (isVectorProperlySet && sizeOfMatrix == sizeOfVector) {
+                infoArea.setText("You can perform calculations");
                 buttonsAccess(false);
                 String[] row;
                 for (int i = 0; i < vectorLength; ++i) {
@@ -233,12 +236,12 @@ public class Controller {
 
         int isVector = rows.length;
         if (isVector != 1) {
-            infoArea.setText("Is not a vector");
+            infoArea.setText("error in matrix input\nIs not a vector");
             buttonsAccess(true);
         }
         //Check if input in text area contains non numbers excluding whitespaces.
         else if ((!textVector.matches("[0-9\\s]+"))) {
-            infoArea.setText("One of inputs in vector field is non a number");
+            infoArea.setText("error in matrix input\nOne of inputs in vector field is non a number");
             buttonsAccess(true);
         } else {
             //This else executes only if vector is valid.
@@ -285,10 +288,12 @@ public class Controller {
      * Calculating LU Decomposition of a square matrix form matrix TextArea input.
      */
     public void calculateLU() {
-
+        isAnyOperationCalculated = true;
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
         Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
         resultsArea.setText(displayer.displaySolution(1));
+        infoArea.setText("Matrix LU Decomposition has been done");
+
 
     }
 
@@ -297,11 +302,13 @@ public class Controller {
      * Calculating inverse matrix form TextArea.
      */
     public void calculateIverseMatrix() {
+        isAnyOperationCalculated = true;
         LUDecomposition LUDec = new LUDecomposition(getMatrix());
         Displayer displayer = new Displayer(getMatrix(), getVector(), getVectorArray(), LUDec);
         resultsArea.setText(displayer.displaySolution(2));
-    }
+        infoArea.setText("Iverse Matrix has been calculated");
 
+    }
 
     /**
      * Reads chosen matrix row from matrix TextArea input and return is as ArrayList of Doubles.
@@ -320,7 +327,21 @@ public class Controller {
         return singleVector;
     }
 
+    /**
+     * Set buttons (LUpivot, Inverse, Save and FileInputOutput) usage - click possibility .
+     *
+     * @param disableButtons Parameter sets buttons to be possible or impossible to click .
+     */
+    public void buttonsAccess(boolean disableButtons) {
+        LUButton.setDisable(disableButtons);
+        inverseButton.setDisable(disableButtons);
 
+        if (isAnyOperationCalculated) {
+            saveButton.setDisable(disableButtons);
+        }
+
+        // loadButton.setDisable(disableButtons);
+    }
     /**
      * Clear all TextAreas in application.
      * @param event Event {@link ActionEvent}.
@@ -332,6 +353,29 @@ public class Controller {
         resultsArea.clear();
         infoArea.setText(initialInfo);
         buttonsAccess(true);
+        isAnyOperationCalculated = false;
+
+    }
+
+    /**
+     * Load data from external file and put its output into result TextArea.
+     */
+    @FXML
+    private void loadFile() {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        resultsArea.setText(FileInputOutput.loadResultFromFile(stage));
+    }
+
+    /**
+     * Save data from result TextArea to external file
+     */
+    @FXML
+    private void saveFile() {
+
+
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        FileInputOutput.saveResults(resultsArea.getText(), stage);
+
     }
 
 
